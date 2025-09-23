@@ -2,8 +2,8 @@
 ## Installation
 ### 1. Cloning a repository:
 ```bash
-git clone https://github.com/AnnaKilimova/sqlite-faker-project.git
-cd python_testing_portfolio
+git clone git clone git clone https://github.com/AnnaKilimova/python-portfolio.git
+cd python_portfolio
 ```
 ### 2. Creating and activating of a virtual environment:
 #### For MacOS/Linux:
