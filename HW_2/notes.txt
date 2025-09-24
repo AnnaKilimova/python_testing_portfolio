@@ -1,4 +1,0 @@
-# ----------------unittest ----------------
-# (venv) kilimovaann@MacBook-Air-Kilimova python_testing_portfolio % python -m unittest HW_2/test_unittest.py
-# ---------------- pytest ----------------
-# (venv) kilimovaann@MacBook-Air-Kilimova python_testing_portfolio % pytest HW_2/test_pytest.py -v
