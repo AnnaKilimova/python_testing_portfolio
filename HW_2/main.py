@@ -55,9 +55,9 @@ class Car:
         return f"{self.model} ({self.color})"
     
 
-car_1 = Car('BMW_X6', "white")
-car_2 = Car('Lexus_RZ', "yellow")
-car_3 = Car('ToyotaCamry_VVT-h', "black")
+car_1 = Car("BMW_X6", "white")
+car_2 = Car("Lexus_RZ", "yellow")
+car_3 = Car("ToyotaCamry_VVT-h", "black")
 
 cars = [car_1, car_2, car_3]
 
@@ -90,4 +90,10 @@ for car in cars:
     print(f"{car}: distance = {car.trip_distance}, fuel = {car.fuel}")
 
 
-
+# Note: According to the original problem statement:
+# Each car's fuel is randomly 0–8 and movement per turn is 0–8.
+# The winner is declared when a car reaches or exceeds desired_dist.
+# With these parameters, it is possible that all cars run out of fuel 
+# before reaching desired_dist, so a winner is not guaranteed.
+# To ensure a winner, either increase the initial fuel range or 
+# define the winner as the car that traveled the farthest if all stop early.
