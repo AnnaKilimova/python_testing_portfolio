@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Reminder List{% endblock %}
+{% block content %}
+
+<h2>Reminder templates</h2>
+
+<form method="post" class="mt-3 mb-4">
+  {{ form.hidden_tag() }}
+
+  <div class="row g-3">
+    <div class="col-md-2">
+      {{ form.day_of_month.label(class="form-label") }}
+      {{ form.day_of_month(class="form-control") }}
+    </div>
+    <div class="col-md-2">
+      {{ form.time.label(class="form-label") }}
+      {{ form.time(class="form-control") }}
+    </div>
+    <div class="col-md-8">
+      {{ form.note.label(class="form-label") }}
+      {{ form.note(class="form-control") }}
+    </div>
+  </div>
+
+  <div class="mt-3">
+    {{ form.services.label(class="form-label") }}
+    {{ form.services(class="form-select", multiple=true, size=5) }}
+  </div>
+
+  <div class="mt-3">
+    {{ form.submit(class="btn btn-primary") }}
+  </div>
+</form>
+
+<hr>
+
+{% if reminders %}
+  <h4>Existing reminders</h4>
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Time</th>
+        <th>Note</th>
+        <th>Services</th>
+        <th style="width: 200px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reminders %}
+        <tr>
+          <td>{{ r.day_of_month or '—' }}</td>
+          <td>{{ r.time.strftime('%H:%M') if r.time else '—' }}</td>
+          <td>{{ r.note or '—' }}</td>
+          <td>{{ r.services | map(attribute='name') | join(', ') or '—' }}</td>
+          <td>
+            <div class="d-inline-flex gap-2">
+              <a href="{{ url_for('routes.edit_reminder', id=r.id) }}" 
+                 class="btn btn-warning btn-sm btn-animate">
+                Edit
+              </a>
+              <form action="{{ url_for('routes.delete_reminder', id=r.id) }}" 
+                    method="POST" class="m-0 p-0">
+                {{ delete_form.hidden_tag() }}
+                <button type="submit" class="btn btn-danger btn-sm btn-animate"
+                        onclick="return confirm('Remove this reminder?');">
+                  Remove
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No reminders yet.</p>
+{% endif %}
+
+<style>
+  /* Smooth animation on hover */
+  .btn-animate {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-animate:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.15);
+  }
+</style>
+
+{% endblock %}

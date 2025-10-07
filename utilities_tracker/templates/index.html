@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+
+<h2 class="mb-3">Services</h2>
+<a href="{{ url_for('routes.add_service') }}" class="btn btn-success mb-3">Add service</a>
+
+{% if services %}
+  <div class="list-group">
+    {% for service in services %}
+      <a href="{{ url_for('routes.service_detail', service_id=service.id) }}" class="list-group-item list-group-item-action">
+        <div class="d-flex justify-content-between">
+          <strong>{{ service.name }}</strong>
+          <span class="text-muted">{{ service.unit }}</span>
+        </div>
+        {% if service.measurements %}
+          <small>Last reading: {{ service.measurements[-1].value }} ({{ service.measurements[-1].date.strftime('%d.%m.%Y') }})</small>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>There are no services yet.</p>
+{% endif %}
+
+<hr class="my-4">
+
+<h4>Reminders for {{ today.strftime('%d.%m.%Y') }}</h4>
+{% if reminders_today %}
+  <ul class="list-group">
+    {% for r in reminders_today %}
+      <li class="list-group-item">
+        <strong>{{ r.time.strftime('%H:%M') }}</strong> — {{ r.note or 'Without a note' }}
+        {% if r.services %}
+          <div class="text-muted small">
+            Services: {{ r.services | map(attribute='name') | join(', ') }}
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>There are no reminders scheduled for today.</p>
+{% endif %}
+
+{% endblock %}
